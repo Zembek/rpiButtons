@@ -22,7 +22,7 @@ namespace RPiButtons.SSD1306
             _display.DisplayUpdate();
         }
 
-        public void DrawPikachu()
+        public void DrawPikachu(uint line, uint column)
         {
             _display.WriteImageDisplayBuf(DisplayImages.Pikachu, 0, 0);
             _display.DisplayUpdate();

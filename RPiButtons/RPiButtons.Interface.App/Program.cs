@@ -21,7 +21,9 @@ namespace RPiButtons.Interface.App
             manager.TurnOn();
             manager.WriteMessage(0, 0, "Jebac pis");
             Thread.Sleep(1500);
-            manager.DrawPikachu();
+            manager.Clear();
+            manager.WriteMessage(0, 10, "O kurla dziala");
+            manager.DrawPikachu(2,25);
             Thread.Sleep(1500);
 
             GpioController controller = new GpioController();
