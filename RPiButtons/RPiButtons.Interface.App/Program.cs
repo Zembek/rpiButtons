@@ -53,6 +53,7 @@ namespace RPiButtons.Interface.App
 
             while (true)
             {
+                bool isUpdate = false;
                 //Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
                 for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
                 {
@@ -62,6 +63,7 @@ namespace RPiButtons.Interface.App
 
                     if (isPressed)
                     {
+                        isUpdate = true;
                         int relayToEnable = _pinouts[pinIndex];
 
                         if (!enabledRelays[relayToEnable])
@@ -77,12 +79,15 @@ namespace RPiButtons.Interface.App
                     }
                 }
 
-                manager.Clear();
-                manager.WriteMessage(0, 0, $"R1: {enabledRelays[_pinouts[0]]}");
-                manager.WriteMessage(0, 80, $"R2: {enabledRelays[_pinouts[1]]}");
-                manager.WriteMessage(2, 0, $"R3: {enabledRelays[_pinouts[2]]}");
-                manager.WriteMessage(2, 80, $"R4: {enabledRelays[_pinouts[3]]}");
-                manager.Update();
+                if (isUpdate)
+                {
+                    manager.Clear();
+                    manager.WriteMessage(0, 0, $"R1: {enabledRelays[_pinouts[0]]}");
+                    manager.WriteMessage(0, 80, $"R2: {enabledRelays[_pinouts[1]]}");
+                    manager.WriteMessage(2, 0, $"R3: {enabledRelays[_pinouts[2]]}");
+                    manager.WriteMessage(2, 80, $"R4: {enabledRelays[_pinouts[3]]}");
+                    manager.Update();
+                }
 
                 //Console.WriteLine("Sleep for 0.5s");
                 Thread.Sleep(500);
