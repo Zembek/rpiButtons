@@ -53,33 +53,54 @@ namespace RPiButtons.Interface.App
 
             while (true)
             {
-                bool isUpdate = false;
-                //Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
-                for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
+                //bool isUpdate = false;
+                List<MatrixButton> pressedButtons = buttonsManager.ArePressed();
+                foreach (var button in pressedButtons)
                 {
-                    MatrixButton buttonToCheck = buttonList[pinIndex];
-                    bool isPressed = buttonsManager.IsPressed(buttonToCheck);
-                    //Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
+                    int buttonIndex = buttonList.IndexOf(button);
+                    if (buttonIndex < 0)
+                        continue;
 
-                    if (isPressed)
+                    int relayToEnable = _pinouts[buttonIndex];
+                    if (!enabledRelays[relayToEnable])
                     {
-                        isUpdate = true;
-                        int relayToEnable = _pinouts[pinIndex];
-
-                        if (!enabledRelays[relayToEnable])
-                        {
-                            controller.Write(relayToEnable, PinValue.Low);
-                            enabledRelays[relayToEnable] = true;
-                        }
-                        else
-                        {
-                            controller.Write(relayToEnable, PinValue.High);
-                            enabledRelays[relayToEnable] = false;
-                        }
+                        controller.Write(relayToEnable, PinValue.Low);
+                        enabledRelays[relayToEnable] = true;
+                    }
+                    else
+                    {
+                        controller.Write(relayToEnable, PinValue.High);
+                        enabledRelays[relayToEnable] = false;
                     }
                 }
 
-                if (isUpdate)
+
+                //Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
+                //for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
+                //{
+                //    MatrixButton buttonToCheck = buttonList[pinIndex];
+                //    bool isPressed = buttonsManager.IsPressed(buttonToCheck);
+                //    //Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
+
+                //    if (isPressed)
+                //    {
+                //        isUpdate = true;
+                //        int relayToEnable = _pinouts[pinIndex];
+
+                //        if (!enabledRelays[relayToEnable])
+                //        {
+                //            controller.Write(relayToEnable, PinValue.Low);
+                //            enabledRelays[relayToEnable] = true;
+                //        }
+                //        else
+                //        {
+                //            controller.Write(relayToEnable, PinValue.High);
+                //            enabledRelays[relayToEnable] = false;
+                //        }
+                //    }
+                //}
+
+                if (pressedButtons.Count > 0)
                 {
                     SetRelayStatus(manager, enabledRelays);
                 }
@@ -140,7 +161,7 @@ namespace RPiButtons.Interface.App
         private static void SetRelayStatus(SSD1306Manager manager, Dictionary<int, bool> enabledRelays)
         {
             manager.Clear();
-            manager.WriteMessage(0, 0, $"R1: {(enabledRelays[_pinouts[0]] ? "ON":"OFF")}");
+            manager.WriteMessage(0, 0, $"R1: {(enabledRelays[_pinouts[0]] ? "ON" : "OFF")}");
             manager.WriteMessage(0, 80, $"R2: {(enabledRelays[_pinouts[1]] ? "ON" : "OFF")}");
             manager.WriteMessage(2, 0, $"R3: {(enabledRelays[_pinouts[2]] ? "ON" : "OFF")}");
             manager.WriteMessage(2, 80, $"R4: {(enabledRelays[_pinouts[3]] ? "ON" : "OFF")}");

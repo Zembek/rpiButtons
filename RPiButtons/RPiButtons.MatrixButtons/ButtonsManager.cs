@@ -47,6 +47,38 @@ namespace RPiButtons.MatrixButtons
             return state == PinValue.High;
         }
 
+        public List<MatrixButton> ArePressed()
+        {
+            List<MatrixButton> result = new List<MatrixButton>();
+
+            foreach (int pinNo in OutputPins)
+                _gpioController.Write(pinNo, PinValue.Low);
+
+            foreach (int pinNo in OutputPins)
+            {
+                _gpioController.Write(pinNo, PinValue.High);
+
+                List<MatrixButton> buttonsToCheck = _buttons
+                    .Where(q => q.RowPin == pinNo)
+                    .ToList();
+
+                foreach(MatrixButton button in buttonsToCheck)
+                {
+                    var status = _gpioController.Read(button.ColumnPin);
+                    if (status == PinValue.High)
+                    {
+                        result.Add(button);
+                    }
+                }
+                _gpioController.Write(pinNo, PinValue.Low);
+            }
+
+            foreach (int pinNo in OutputPins)
+                _gpioController.Write(pinNo, PinValue.Low);
+
+            return result;
+        }
+
         public void Cleanup()
         {
             foreach (int pinNo in OutputPins)
