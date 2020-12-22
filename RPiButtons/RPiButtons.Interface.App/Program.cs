@@ -18,7 +18,10 @@ namespace RPiButtons.Interface.App
             GpioController controller = new GpioController();
             Console.WriteLine("Initialize piouts");
             foreach (var pinNo in _pinouts)
+            {
                 controller.OpenPin(pinNo, PinMode.Output);
+                controller.Write(pinNo, PinValue.Low);
+            }
             Console.WriteLine("END Initialize piouts");
 
             while (true)
