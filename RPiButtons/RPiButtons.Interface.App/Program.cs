@@ -12,52 +12,70 @@ namespace RPiButtons.Interface.App
     class Program
     {
         private static List<int> _pinouts = new List<int> { 14, 15, 18, 23 };
-        static async Task Main(string[] args)
+        private static List<MatrixButton> _matrixButtons = new List<MatrixButton>
+        {
+            new MatrixButton("One", 21, 16),
+            new MatrixButton("Two", 20, 16),
+            new MatrixButton("Three", 21, 12),
+            new MatrixButton("Four", 20, 12)
+        };
+
+        static void Main(string[] args)
         {
             Console.WriteLine("App is up");
 #if DEBUG
             Console.WriteLine("Waiting for debugger. Press any key to continue");
             Console.ReadKey();
 #endif
-            SSD1306Manager manager = new SSD1306Manager();
-            manager.TurnOn();
-            manager.WriteMessageAndUpdate(0, 0, "Jebac pis");
-            Thread.Sleep(1500);
-            manager.Clear();
-            manager.WriteMessageAndUpdate(0, 20, "O kurla dziala");
-            manager.DrawPikachu(1, 0);
-            Thread.Sleep(1500);
 
-            GpioController controller = new GpioController();
-            Console.WriteLine("Initialize piouts");
-            Dictionary<int, bool> enabledRelays = new Dictionary<int, bool>();
+            SSD1306Manager screenManager = new SSD1306Manager();
+            GpioController gpioController = new GpioController();
+            ButtonsManager buttonsManager = new ButtonsManager();
+
+            InitializeScreen(screenManager);
+            Dictionary<int, bool> enabledRelays = InitializeRelays(gpioController);
+            InitializeMatrixButtons(gpioController, buttonsManager);
+            ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays);
+            DeinitializeRelays(gpioController);
+            DeinitializeMatrixButtons(buttonsManager);
+            TurnOffScreen(screenManager);
+
+            Console.WriteLine("App is down");
+        }
+
+        private static void TurnOffScreen(SSD1306Manager manager)
+        {
+            Console.WriteLine("Turn off screen");
+            manager.TurnOff();
+            Console.WriteLine("END Turn off screen");
+        }
+
+        private static void DeinitializeMatrixButtons(ButtonsManager buttonsManager)
+        {
+            Console.WriteLine("DeInitialize matrix buttons");
+            buttonsManager.Cleanup();
+            Console.WriteLine("END DeInitialize matrix buttons");
+        }
+
+        private static void DeinitializeRelays(GpioController controller)
+        {
+            Console.WriteLine("DeInitialize piouts");
             foreach (var pinNo in _pinouts)
             {
-                controller.OpenPin(pinNo, PinMode.Output);
-                controller.Write(pinNo, PinValue.High);
-                enabledRelays.Add(pinNo, false);
+                controller.ClosePin(pinNo);
             }
+            Console.WriteLine("END DeInitialize piouts");
+        }
 
-            Console.WriteLine("END Initialize piouts");
-
-            Console.WriteLine("Initialize Matrix Buttons");
-            ButtonsManager buttonsManager = new ButtonsManager();
-            MatrixButton buttonOne = new MatrixButton("One", 21, 16);
-            MatrixButton buttonTwo = new MatrixButton("Two", 20, 16);
-            MatrixButton buttonThree = new MatrixButton("Three", 21, 12);
-            MatrixButton buttonFour = new MatrixButton("Four", 20, 12);
-            List<MatrixButton> buttonList = new List<MatrixButton> { buttonOne, buttonTwo, buttonThree, buttonFour };
-            buttonsManager.Init(buttonList, controller);
-
+        private static void ApplicationLoop(SSD1306Manager manager, GpioController controller, ButtonsManager buttonsManager, Dictionary<int, bool> enabledRelays)
+        {
             SetRelayStatus(manager, enabledRelays);
-
             while (true)
             {
-                //bool isUpdate = false;
                 List<MatrixButton> pressedButtons = buttonsManager.ArePressed();
                 foreach (var button in pressedButtons)
                 {
-                    int buttonIndex = buttonList.IndexOf(button);
+                    int buttonIndex = _matrixButtons.IndexOf(button);
                     if (buttonIndex < 0)
                         continue;
 
@@ -74,88 +92,44 @@ namespace RPiButtons.Interface.App
                     }
                 }
 
-
-                //Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
-                //for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
-                //{
-                //    MatrixButton buttonToCheck = buttonList[pinIndex];
-                //    bool isPressed = buttonsManager.IsPressed(buttonToCheck);
-                //    //Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
-
-                //    if (isPressed)
-                //    {
-                //        isUpdate = true;
-                //        int relayToEnable = _pinouts[pinIndex];
-
-                //        if (!enabledRelays[relayToEnable])
-                //        {
-                //            controller.Write(relayToEnable, PinValue.Low);
-                //            enabledRelays[relayToEnable] = true;
-                //        }
-                //        else
-                //        {
-                //            controller.Write(relayToEnable, PinValue.High);
-                //            enabledRelays[relayToEnable] = false;
-                //        }
-                //    }
-                //}
-
                 if (pressedButtons.Count > 0)
                 {
                     SetRelayStatus(manager, enabledRelays);
                 }
 
-                //Console.WriteLine("Sleep for 0.5s");
                 Thread.Sleep(500);
 
                 if (!enabledRelays.ContainsValue(false))
                     break;
             }
+        }
 
-            //while (true)
-            //{
-            //    for (int pinIndex = 0; pinIndex < _inputPins.Count; pinIndex++)
-            //    {
-            //        if (controller.Read(_inputPins[pinIndex]) == PinValue.High)
-            //        {
-            //            manager.Clear();
-            //            manager.WriteMessage(0, 0, $"Pin no: {_inputPins[pinIndex]}");
-            //            int relayToEnable = _pinouts[pinIndex];
+        private static void InitializeMatrixButtons(GpioController controller, ButtonsManager buttonsManager)
+        {
+            Console.WriteLine("Initialize Matrix Buttons");
+            buttonsManager.Init(_matrixButtons, controller);
+            Console.WriteLine("END Initialize Matrix Buttons");
+        }
 
-            //            if (!enabledRelays[relayToEnable])
-            //            {
-            //                controller.Write(relayToEnable, PinValue.Low);
-            //                enabledRelays[relayToEnable] = true;
-            //            }
-            //            else
-            //            {
-            //                controller.Write(relayToEnable, PinValue.High);
-            //                enabledRelays[relayToEnable] = false;
-            //            }
-            //        }
-            //    }
-            //}
-
-            //foreach (var pinNo in _pinouts)
-            //{
-            //    Console.WriteLine($"Set pin: {pinNo} value: Low");
-            //    controller.Write(pinNo, PinValue.Low);
-            //    Console.WriteLine($"Sleep 1500ms");
-            //    Thread.Sleep(1500);
-            //    Console.WriteLine($"Set pin: {pinNo} value: High");
-            //    controller.Write(pinNo, PinValue.High);
-            //    Console.WriteLine($"Sleep 1000ms");
-            //    Thread.Sleep(1000);
-            //}
-
-            Console.WriteLine("DeInitialize piouts");
+        private static Dictionary<int, bool> InitializeRelays(GpioController controller)
+        {
+            Console.WriteLine("Initialize piouts");
+            Dictionary<int, bool> enabledRelays = new Dictionary<int, bool>();
             foreach (var pinNo in _pinouts)
             {
-                controller.ClosePin(pinNo);
+                controller.OpenPin(pinNo, PinMode.Output);
+                controller.Write(pinNo, PinValue.High);
+                enabledRelays.Add(pinNo, false);
             }
-            Console.WriteLine("END DeInitialize piouts");
+            Console.WriteLine("END Initialize piouts");
+            return enabledRelays;
+        }
 
-            manager.TurnOff();
+        private static void InitializeScreen(SSD1306Manager manager)
+        {
+            Console.WriteLine("Initialize Screen");
+            manager.TurnOn();
+            Console.WriteLine("END Initialize Screen");
         }
 
         private static void SetRelayStatus(SSD1306Manager manager, Dictionary<int, bool> enabledRelays)
