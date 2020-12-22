@@ -21,10 +21,10 @@ namespace RPiButtons.Interface.App
 #endif
             SSD1306Manager manager = new SSD1306Manager();
             manager.TurnOn();
-            manager.WriteMessage(0, 0, "Jebac pis");
+            manager.WriteMessageAndUpdate(0, 0, "Jebac pis");
             Thread.Sleep(1500);
             manager.Clear();
-            manager.WriteMessage(0, 20, "O kurla dziala");
+            manager.WriteMessageAndUpdate(0, 20, "O kurla dziala");
             manager.DrawPikachu(1, 0);
             Thread.Sleep(1500);
 
@@ -49,14 +49,16 @@ namespace RPiButtons.Interface.App
             List<MatrixButton> buttonList = new List<MatrixButton> { buttonOne, buttonTwo, buttonThree, buttonFour };
             buttonsManager.Init(buttonList, controller);
 
+            manager.Clear();
+
             while (true)
             {
-                Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
+                //Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
                 for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
                 {
                     MatrixButton buttonToCheck = buttonList[pinIndex];
                     bool isPressed = buttonsManager.IsPressed(buttonToCheck);
-                    Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
+                    //Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
 
                     if (isPressed)
                     {
@@ -74,8 +76,19 @@ namespace RPiButtons.Interface.App
                         }
                     }
                 }
-                Console.WriteLine("Sleep for 1.5s");
-                Thread.Sleep(1500);
+
+                manager.Clear();
+                manager.WriteMessage(0, 0, $"R1: {enabledRelays[_pinouts[0]]}");
+                manager.WriteMessage(0, 80, $"R2: {enabledRelays[_pinouts[1]]}");
+                manager.WriteMessage(2, 0, $"R3: {enabledRelays[_pinouts[2]]}");
+                manager.WriteMessage(2, 80, $"R4: {enabledRelays[_pinouts[3]]}");
+                manager.Update();
+
+                //Console.WriteLine("Sleep for 0.5s");
+                Thread.Sleep(500);
+
+                if (!enabledRelays.ContainsValue(false))
+                    break;
             }
 
             //while (true)

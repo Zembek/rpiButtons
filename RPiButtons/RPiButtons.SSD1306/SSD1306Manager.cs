@@ -16,9 +16,19 @@ namespace RPiButtons.SSD1306
             _display.TurnOffDisplay();
         }
 
+        public void WriteMessageAndUpdate(uint line, uint column, string message)
+        {
+            _display.WriteLineDisplayBuf(message, column, line);
+            _display.DisplayUpdate();
+        }
+
         public void WriteMessage(uint line, uint column, string message)
         {
             _display.WriteLineDisplayBuf(message, column, line);
+        }
+
+        public void Update()
+        {
             _display.DisplayUpdate();
         }
 
