@@ -58,17 +58,20 @@ namespace RPiButtons.Interface.App
                     bool isPressed = buttonsManager.IsPressed(buttonToCheck);
                     Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
 
-                    int relayToEnable = _pinouts[pinIndex];
+                    if (isPressed)
+                    {
+                        int relayToEnable = _pinouts[pinIndex];
 
-                    if (!enabledRelays[relayToEnable])
-                    {
-                        controller.Write(relayToEnable, PinValue.Low);
-                        enabledRelays[relayToEnable] = true;
-                    }
-                    else
-                    {
-                        controller.Write(relayToEnable, PinValue.High);
-                        enabledRelays[relayToEnable] = false;
+                        if (!enabledRelays[relayToEnable])
+                        {
+                            controller.Write(relayToEnable, PinValue.Low);
+                            enabledRelays[relayToEnable] = true;
+                        }
+                        else
+                        {
+                            controller.Write(relayToEnable, PinValue.High);
+                            enabledRelays[relayToEnable] = false;
+                        }
                     }
                 }
                 Console.WriteLine("Sleep for 1.5s");
