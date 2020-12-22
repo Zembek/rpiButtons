@@ -18,9 +18,11 @@ namespace RPiButtons.Interface.App
             Console.ReadKey();
 #endif
             SSD1306Manager manager = new SSD1306Manager();
-            manager.Init();
+            manager.TurnOn();
             manager.WriteMessage(0, 0, "Jebac pis");
-
+            Thread.Sleep(1500);
+            manager.DrawPikachu();
+            Thread.Sleep(1500);
 
             GpioController controller = new GpioController();
             Console.WriteLine("Initialize piouts");
@@ -50,7 +52,7 @@ namespace RPiButtons.Interface.App
             }
             Console.WriteLine("END DeInitialize piouts");
 
-            manager.DeInit();
+            manager.TurnOff();
         }
     }
 }

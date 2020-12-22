@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RPiButtons.SSD1306.Core
+﻿namespace RPiButtons.SSD1306.Core
 {
     // column major, little endian.
     public class DisplayImage
