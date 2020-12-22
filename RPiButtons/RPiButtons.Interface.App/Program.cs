@@ -1,20 +1,26 @@
-﻿using System;
+﻿using RPiButtons.SSD1306;
+using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RPiButtons.Interface.App
 {
     class Program
     {
         private static List<int> _pinouts = new List<int> { 14, 15, 18, 23 };
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("App is up");
 #if DEBUG
             Console.WriteLine("Waiting for debugger. Press any key to continue");
             Console.ReadKey();
 #endif
+            SSD1306Manager manager = new SSD1306Manager();
+            await manager.Test();
+
+
             GpioController controller = new GpioController();
             Console.WriteLine("Initialize piouts");
             foreach (var pinNo in _pinouts)
