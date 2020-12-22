@@ -77,6 +77,7 @@ namespace RPiButtons.Interface.App
                             enabledRelays[relayToEnable] = false;
                         }
                     }
+                    Thread.Sleep(100);
                 }
 
                 if (isUpdate)
