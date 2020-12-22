@@ -23,6 +23,7 @@ namespace RPiButtons.SSD1306
         public void WriteMessage(uint line, uint column, string message)
         {
             _display.WriteLineDisplayBuf(message, column, line);
+            _display.DisplayUpdate();
         }
     }
 }
