@@ -9,10 +9,21 @@ namespace RPiButtons.SSD1306
 {
     public class SSD1306Manager
     {
-        public async Task Test()
+        private readonly Display _display = new Display();
+
+        public void Init()
         {
-            var display = new Display();
-            display.Init(new Common.DisplayConfiguration());
+            _display.Init(new Common.DisplayConfiguration());
+        }
+
+        public void DeInit()
+        {
+            _display.TurnOffDisplay();
+        }
+
+        public void WriteMessage(uint line, uint column, string message)
+        {
+            _display.WriteLineDisplayBuf(message, column, line);
         }
     }
 }

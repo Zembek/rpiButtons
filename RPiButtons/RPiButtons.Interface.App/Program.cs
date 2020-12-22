@@ -18,7 +18,8 @@ namespace RPiButtons.Interface.App
             Console.ReadKey();
 #endif
             SSD1306Manager manager = new SSD1306Manager();
-            await manager.Test();
+            manager.Init();
+            manager.WriteMessage(0, 0, "Jebac pis");
 
 
             GpioController controller = new GpioController();
@@ -30,21 +31,26 @@ namespace RPiButtons.Interface.App
             }
             Console.WriteLine("END Initialize piouts");
 
-            while (true)
+            foreach (var pinNo in _pinouts)
             {
-                foreach (var pinNo in _pinouts)
-                {
-                    Console.WriteLine($"Set pin: {pinNo} value: Low");
-                    controller.Write(pinNo, PinValue.Low);
-                    Console.WriteLine($"Sleep 1500ms");
-                    Thread.Sleep(1500);
-                    Console.WriteLine($"Set pin: {pinNo} value: High");
-                    controller.Write(pinNo, PinValue.High);
-                    Console.WriteLine($"Sleep 1000ms");
-                    Thread.Sleep(1000);
-                }
-
+                Console.WriteLine($"Set pin: {pinNo} value: Low");
+                controller.Write(pinNo, PinValue.Low);
+                Console.WriteLine($"Sleep 1500ms");
+                Thread.Sleep(1500);
+                Console.WriteLine($"Set pin: {pinNo} value: High");
+                controller.Write(pinNo, PinValue.High);
+                Console.WriteLine($"Sleep 1000ms");
+                Thread.Sleep(1000);
             }
+
+            Console.WriteLine("DeInitialize piouts");
+            foreach (var pinNo in _pinouts)
+            {
+                controller.ClosePin(pinNo);
+            }
+            Console.WriteLine("END DeInitialize piouts");
+
+            manager.DeInit();
         }
     }
 }

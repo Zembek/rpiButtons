@@ -36,6 +36,7 @@ namespace RPiButtons.SSD1306.Core
         private I2cDevice displayI2c;
 
         private const byte SSD1306_Default_Address = 0x3C;
+        private const int I2C_Default_Address = 1;
         private byte? SSD1306_Custom_Address = null;
 
         internal byte SSD1306_Address => SSD1306_Custom_Address ?? SSD1306_Default_Address;
@@ -58,7 +59,7 @@ namespace RPiButtons.SSD1306.Core
            The device may not respond to multiple Init calls without being power cycled
            so we allow an optional boolean to excuse failures which is useful while debugging
            without power cycling the display */
-        public async void Init(DisplayConfiguration configuration)
+        public void Init(DisplayConfiguration configuration)
         {
             Debug.WriteLine("SSD1306::Initialize");
 
@@ -67,7 +68,7 @@ namespace RPiButtons.SSD1306.Core
                 SSD1306_Custom_Address = configuration.DisplayAddress;
                 //Instantiate the I2CConnectionSettings using the device address
 
-                I2cConnectionSettings settings = new I2cConnectionSettings(1, SSD1306_Default_Address);
+                I2cConnectionSettings settings = new I2cConnectionSettings(I2C_Default_Address, SSD1306_Default_Address);
                 //Set the I2C bus speed of connection to fast mode
                 //settings.BusSpeed = I2cBusSpeed.FastMode;
                 ////Use the I2CBus device selector to create an advanced query syntax string
