@@ -39,7 +39,7 @@ namespace RPiButtons.Interface.App
             Console.WriteLine("END Initialize piouts");
 
             Console.WriteLine("Initialize input pins");
-            foreach (var pinNo in _pinouts)
+            foreach (var pinNo in _inputPins)
             {
                 controller.OpenPin(pinNo, PinMode.InputPullDown);
             }
