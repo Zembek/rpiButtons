@@ -49,7 +49,7 @@ namespace RPiButtons.Interface.App
             List<MatrixButton> buttonList = new List<MatrixButton> { buttonOne, buttonTwo, buttonThree, buttonFour };
             buttonsManager.Init(buttonList, controller);
 
-            manager.Clear();
+            SetRelayStatus(manager, enabledRelays);
 
             while (true)
             {
@@ -81,12 +81,7 @@ namespace RPiButtons.Interface.App
 
                 if (isUpdate)
                 {
-                    manager.Clear();
-                    manager.WriteMessage(0, 0, $"R1: {enabledRelays[_pinouts[0]]}");
-                    manager.WriteMessage(0, 80, $"R2: {enabledRelays[_pinouts[1]]}");
-                    manager.WriteMessage(2, 0, $"R3: {enabledRelays[_pinouts[2]]}");
-                    manager.WriteMessage(2, 80, $"R4: {enabledRelays[_pinouts[3]]}");
-                    manager.Update();
+                    SetRelayStatus(manager, enabledRelays);
                 }
 
                 //Console.WriteLine("Sleep for 0.5s");
@@ -140,6 +135,16 @@ namespace RPiButtons.Interface.App
             Console.WriteLine("END DeInitialize piouts");
 
             manager.TurnOff();
+        }
+
+        private static void SetRelayStatus(SSD1306Manager manager, Dictionary<int, bool> enabledRelays)
+        {
+            manager.Clear();
+            manager.WriteMessage(0, 0, $"R1: {enabledRelays[_pinouts[0]]}");
+            manager.WriteMessage(0, 80, $"R2: {enabledRelays[_pinouts[1]]}");
+            manager.WriteMessage(2, 0, $"R3: {enabledRelays[_pinouts[2]]}");
+            manager.WriteMessage(2, 80, $"R4: {enabledRelays[_pinouts[3]]}");
+            manager.Update();
         }
     }
 }
