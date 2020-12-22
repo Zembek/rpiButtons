@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RPiButtons.MatrixButtons\RPiButtons.MatrixButtons.csproj" />
     <ProjectReference Include="..\RPiButtons.SSD1306\RPiButtons.SSD1306.csproj" />
   </ItemGroup>
 

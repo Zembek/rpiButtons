@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPiButtons.Interface.App", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPiButtons.SSD1306", "RPiButtons.SSD1306\RPiButtons.SSD1306.csproj", "{D8398BA4-F9A1-4200-AD28-E0D262060F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPiButtons.MatrixButtons", "RPiButtons.MatrixButtons\RPiButtons.MatrixButtons.csproj", "{AACBB253-6A7A-46F5-BE91-228BC86A91CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D8398BA4-F9A1-4200-AD28-E0D262060F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8398BA4-F9A1-4200-AD28-E0D262060F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8398BA4-F9A1-4200-AD28-E0D262060F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AACBB253-6A7A-46F5-BE91-228BC86A91CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AACBB253-6A7A-46F5-BE91-228BC86A91CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AACBB253-6A7A-46F5-BE91-228BC86A91CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AACBB253-6A7A-46F5-BE91-228BC86A91CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

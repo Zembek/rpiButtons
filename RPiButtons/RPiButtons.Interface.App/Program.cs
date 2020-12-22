@@ -1,4 +1,6 @@
-﻿using RPiButtons.SSD1306;
+﻿using RPiButtons.MatrixButtons;
+using RPiButtons.MatrixButtons.Common;
+using RPiButtons.SSD1306;
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
@@ -10,9 +12,6 @@ namespace RPiButtons.Interface.App
     class Program
     {
         private static List<int> _pinouts = new List<int> { 14, 15, 18, 23 };
-
-        private static List<int> _inputPinsHigh = new List<int> { 12, 16 };
-        private static List<int> _inputPins = new List<int> { 20, 21 };
         static async Task Main(string[] args)
         {
             Console.WriteLine("App is up");
@@ -39,26 +38,25 @@ namespace RPiButtons.Interface.App
                 enabledRelays.Add(pinNo, false);
             }
 
-            foreach (var pinNo in _inputPinsHigh)
-            {
-                controller.OpenPin(pinNo, PinMode.Output);
-                controller.Write(pinNo, PinValue.High);
-            }
             Console.WriteLine("END Initialize piouts");
 
-            Console.WriteLine("Initialize input pins");
-            foreach (var pinNo in _inputPins)
-            {
-                controller.OpenPin(pinNo, PinMode.InputPullDown);
-            }
-            Console.WriteLine("END Initialize input pins");
+            Console.WriteLine("Initialize Matrix Buttons");
+            ButtonsManager buttonsManager = new ButtonsManager();
+            MatrixButton buttonOne = new MatrixButton("One", 21, 16);
+            MatrixButton buttonTwo = new MatrixButton("Two", 20, 16);
+            MatrixButton buttonThree = new MatrixButton("Three", 21, 12);
+            MatrixButton buttonFour = new MatrixButton("Four", 20, 12);
+            List<MatrixButton> buttonList = new List<MatrixButton> { buttonOne, buttonTwo, buttonThree, buttonFour };
+            buttonsManager.Init(buttonList, controller);
 
             while (true)
             {
                 Console.WriteLine($"Checking pins: {DateTime.Now.ToUniversalTime()}");
-                for (int pinIndex = 0; pinIndex < _inputPins.Count; pinIndex++)
+                for (int pinIndex = 0; pinIndex < buttonList.Count; pinIndex++)
                 {
-                    Console.WriteLine($"Input no {_inputPins[pinIndex]} is {controller.Read(_inputPins[pinIndex])}");
+                    MatrixButton buttonToCheck = buttonList[pinIndex];
+                    bool isPressed = buttonsManager.IsPressed(buttonToCheck);
+                    Console.WriteLine($"Input no {buttonList[pinIndex].Name} is {isPressed}");
                 }
                 Console.WriteLine("Sleep for 1.5s");
                 Thread.Sleep(1500);
