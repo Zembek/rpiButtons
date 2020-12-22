@@ -20,7 +20,7 @@ namespace RPiButtons.Interface.App
             foreach (var pinNo in _pinouts)
             {
                 controller.OpenPin(pinNo, PinMode.Output);
-                controller.Write(pinNo, PinValue.Low);
+                controller.Write(pinNo, PinValue.High);
             }
             Console.WriteLine("END Initialize piouts");
 
