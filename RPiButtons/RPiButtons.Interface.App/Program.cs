@@ -47,27 +47,38 @@ namespace RPiButtons.Interface.App
 
             while (true)
             {
+                Console.WriteLine("Checking pins");
                 for (int pinIndex = 0; pinIndex < _inputPins.Count; pinIndex++)
                 {
-                    if (controller.Read(_inputPins[pinIndex]) == PinValue.High)
-                    {
-                        manager.Clear();
-                        manager.WriteMessage(0, 0, $"Pin no: {_inputPins[pinIndex]}");
-                        int relayToEnable = _pinouts[pinIndex];
-
-                        if (!enabledRelays[relayToEnable])
-                        {
-                            controller.Write(relayToEnable, PinValue.Low);
-                            enabledRelays[relayToEnable] = true;
-                        }
-                        else
-                        {
-                            controller.Write(relayToEnable, PinValue.High);
-                            enabledRelays[relayToEnable] = false;
-                        }
-                    }
+                    Console.WriteLine($"Input no {_inputPins[pinIndex]} is {controller.Read(_inputPins[pinIndex])}");
                 }
+                Console.WriteLine("Sleep for 1.5s");
+                Thread.Sleep(1500);
             }
+
+            //while (true)
+            //{
+            //    for (int pinIndex = 0; pinIndex < _inputPins.Count; pinIndex++)
+            //    {
+            //        if (controller.Read(_inputPins[pinIndex]) == PinValue.High)
+            //        {
+            //            manager.Clear();
+            //            manager.WriteMessage(0, 0, $"Pin no: {_inputPins[pinIndex]}");
+            //            int relayToEnable = _pinouts[pinIndex];
+
+            //            if (!enabledRelays[relayToEnable])
+            //            {
+            //                controller.Write(relayToEnable, PinValue.Low);
+            //                enabledRelays[relayToEnable] = true;
+            //            }
+            //            else
+            //            {
+            //                controller.Write(relayToEnable, PinValue.High);
+            //                enabledRelays[relayToEnable] = false;
+            //            }
+            //        }
+            //    }
+            //}
 
             //foreach (var pinNo in _pinouts)
             //{
