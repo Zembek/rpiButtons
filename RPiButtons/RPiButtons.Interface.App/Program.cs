@@ -69,6 +69,7 @@ namespace RPiButtons.Interface.App
 
         private static void ApplicationLoop(SSD1306Manager manager, GpioController controller, ButtonsManager buttonsManager, Dictionary<int, bool> enabledRelays)
         {
+            Console.WriteLine("Start application loop");
             SetRelayStatus(manager, enabledRelays);
             while (true)
             {
@@ -102,6 +103,7 @@ namespace RPiButtons.Interface.App
                 if (!enabledRelays.ContainsValue(false))
                     break;
             }
+            Console.WriteLine("End application loop");
         }
 
         private static void InitializeMatrixButtons(GpioController controller, ButtonsManager buttonsManager)
