@@ -67,7 +67,7 @@ namespace RPiButtons.SSD1306.Core
                 SSD1306_Custom_Address = configuration.DisplayAddress;
                 //Instantiate the I2CConnectionSettings using the device address
 
-                I2cConnectionSettings settings = new I2cConnectionSettings(0, 60);
+                I2cConnectionSettings settings = new I2cConnectionSettings(1, SSD1306_Address);
                 //Set the I2C bus speed of connection to fast mode
                 //settings.BusSpeed = I2cBusSpeed.FastMode;
                 ////Use the I2CBus device selector to create an advanced query syntax string
@@ -77,7 +77,7 @@ namespace RPiButtons.SSD1306.Core
                 ////Instantiate the the I2C device using the device id of the I2CBus and the I2CConnectionSettings
                 //displayI2c = await I2cDevice.FromIdAsync(dis[0].Id, settings);
 
-                var displayI2c = I2cDevice.Create(settings);
+                displayI2c = I2cDevice.Create(settings);
 
                 //Check if device was found
                 if (displayI2c == null)
