@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Device.Gpio" Version="1.2.0" />
-    <PackageReference Include="Unosquare.RaspberryIO.Peripherals" Version="0.5.0" />
   </ItemGroup>
 
   <ItemGroup>
