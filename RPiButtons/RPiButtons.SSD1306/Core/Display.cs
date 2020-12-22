@@ -67,7 +67,7 @@ namespace RPiButtons.SSD1306.Core
                 SSD1306_Custom_Address = configuration.DisplayAddress;
                 //Instantiate the I2CConnectionSettings using the device address
 
-                I2cConnectionSettings settings = new I2cConnectionSettings(1, SSD1306_Address);
+                I2cConnectionSettings settings = new I2cConnectionSettings(0, SSD1306_Address);
                 //Set the I2C bus speed of connection to fast mode
                 //settings.BusSpeed = I2cBusSpeed.FastMode;
                 ////Use the I2CBus device selector to create an advanced query syntax string
