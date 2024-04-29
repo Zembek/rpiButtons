@@ -71,6 +71,7 @@ namespace RPiButtons.Interface.App
             Console.WriteLine("DeInitialize piouts");
             foreach (var pinNo in _pinouts)
             {
+                controller.Write(pinNo, PinValue.High);
                 controller.ClosePin(pinNo);
             }
             Console.WriteLine("END DeInitialize piouts");
