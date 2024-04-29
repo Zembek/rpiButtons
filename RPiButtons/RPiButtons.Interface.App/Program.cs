@@ -11,7 +11,7 @@ namespace RPiButtons.Interface.App
 {
     class Program
     {
-        private static List<int> _pinouts = new List<int> { 14, 15, 18, 23, 24, 25, 8, 7 };
+        private static List<int> _pinouts = new List<int> { 14, 15, 18, 23/*, 24, 25, 8, 7 */};
         private static List<MatrixButton> _matrixButtons = new List<MatrixButton>
         {
             new MatrixButton("One", 21, 16),
@@ -28,26 +28,26 @@ namespace RPiButtons.Interface.App
             Console.ReadKey();
 #endif
 
-            //SSD1306Manager screenManager = new SSD1306Manager();
+            SSD1306Manager screenManager = new SSD1306Manager();
             GpioController gpioController = new GpioController();
-            //ButtonsManager buttonsManager = new ButtonsManager();
+            ButtonsManager buttonsManager = new ButtonsManager();
 
-            //InitializeScreen(screenManager);
+            InitializeScreen(screenManager);
             Dictionary<int, bool> enabledRelays = InitializeRelays(gpioController);
 
-            foreach (int pin in _pinouts)
-            {
-                gpioController.Write(pin, PinValue.Low);
-                Thread.Sleep(500);
-                gpioController.Write(pin, PinValue.High);
-                Thread.Sleep(500);
-            }
+            //foreach (int pin in _pinouts)
+            //{
+            //    gpioController.Write(pin, PinValue.Low);
+            //    Thread.Sleep(500);
+            //    gpioController.Write(pin, PinValue.High);
+            //    Thread.Sleep(500);
+            //}
 
-            //InitializeMatrixButtons(gpioController, buttonsManager);
-            //ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays);
+            InitializeMatrixButtons(gpioController, buttonsManager);
+            ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays);
             DeinitializeRelays(gpioController);
-            //DeinitializeMatrixButtons(buttonsManager);
-            //TurnOffScreen(screenManager);
+            DeinitializeMatrixButtons(buttonsManager);
+            TurnOffScreen(screenManager);
 
             Console.WriteLine("App is down");
         }
