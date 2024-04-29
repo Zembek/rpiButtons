@@ -35,6 +35,10 @@ namespace RPiButtons.Interface.App
             InitializeScreen(screenManager);
             Dictionary<int, bool> enabledRelays = InitializeRelays(gpioController);
 
+            screenManager.DrawPikachu(0, 0);
+            Thread.Sleep(2000);
+
+
             //foreach (int pin in _pinouts)
             //{
             //    gpioController.Write(pin, PinValue.Low);

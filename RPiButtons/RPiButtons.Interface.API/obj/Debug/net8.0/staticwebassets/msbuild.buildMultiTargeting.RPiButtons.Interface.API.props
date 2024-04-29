@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RPiButtons.Interface.API.props" />
+</Project>

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "zbo2rd2b7GFJAxupKJYKU1DCnvytp6acxDP+yAKCG9nGUdpQCyhKP4T9nKd+H6aW7MMUqvqvjN8vdlZ5Lg1Ipw==",
+  "success": true,
+  "projectFilePath": "D:\\Projekty\\Raspberry\\rpiButtons\\RPiButtons\\RPiButtons.Interface.API\\RPiButtons.Interface.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Zembek\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.6\\microsoft.visualstudio.azure.containers.tools.targets.1.19.6.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\Zembek\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

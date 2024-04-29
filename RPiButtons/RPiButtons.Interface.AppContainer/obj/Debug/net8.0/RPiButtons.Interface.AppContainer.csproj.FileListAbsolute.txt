@@ -1,0 +1,15 @@
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\bin\Debug\net8.0\RPiButtons.Interface.AppContainer.exe
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\bin\Debug\net8.0\RPiButtons.Interface.AppContainer.deps.json
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\bin\Debug\net8.0\RPiButtons.Interface.AppContainer.runtimeconfig.json
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\bin\Debug\net8.0\RPiButtons.Interface.AppContainer.dll
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\bin\Debug\net8.0\RPiButtons.Interface.AppContainer.pdb
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.AssemblyInfoInputs.cache
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.AssemblyInfo.cs
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.csproj.CoreCompileInputs.cache
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.sourcelink.json
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.dll
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\refint\RPiButtons.Interface.AppContainer.dll
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.pdb
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\RPiButtons.Interface.AppContainer.genruntimeconfig.cache
+D:\Projekty\Raspberry\rpiButtons\RPiButtons\RPiButtons.Interface.AppContainer\obj\Debug\net8.0\ref\RPiButtons.Interface.AppContainer.dll

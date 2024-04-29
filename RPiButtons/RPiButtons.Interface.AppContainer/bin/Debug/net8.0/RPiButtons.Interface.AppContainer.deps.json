@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "RPiButtons.Interface.AppContainer/1.0.0": {
+        "runtime": {
+          "RPiButtons.Interface.AppContainer.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RPiButtons.Interface.AppContainer/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
