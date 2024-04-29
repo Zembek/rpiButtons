@@ -14,9 +14,9 @@ namespace RPiButtons.Interface.App
         private static List<int> _pinouts = new List<int> { 14, 15, 18, 23/*, 24, 25, 8, 7 */};
         private static List<MatrixButton> _matrixButtons = new List<MatrixButton>
         {
-            new MatrixButton("One", 26, 16),
+            new MatrixButton("One", 19, 16),
             new MatrixButton("Two", 20, 16),
-            new MatrixButton("Three", 26, 12),
+            new MatrixButton("Three", 19, 12),
             new MatrixButton("Four", 20, 12)
         };
 
