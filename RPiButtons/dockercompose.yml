@@ -14,5 +14,6 @@ services:
       - API_PORT=5100
     devices:
       - /dev/gpiomem:/dev/gpiomem
+      - /dev/i2c-1:/dev/i2c-1
     depends_on:
       - application-api
