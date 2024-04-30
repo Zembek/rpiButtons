@@ -5,6 +5,8 @@ services:
     image: rpi/rpibuttons-api
     ports:
       - "5100:8080"
+    expose:
+      - "5100"
 
   application-app:
     image: rpi/rpibuttons-app
