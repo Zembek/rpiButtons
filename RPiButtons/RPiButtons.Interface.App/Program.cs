@@ -22,7 +22,7 @@ namespace RPiButtons.Interface.App
             new MatrixButton("Four", 20, 12)
         };
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             string apiHost = Environment.GetEnvironmentVariable("API_HOST");
             string apiProtocol = Environment.GetEnvironmentVariable("API_PROTOCOL");
@@ -56,7 +56,7 @@ namespace RPiButtons.Interface.App
             //}
 
             InitializeMatrixButtons(gpioController, buttonsManager);
-            ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays);
+            await ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays, apiUrl);
             DeinitializeRelays(gpioController);
             DeinitializeMatrixButtons(buttonsManager);
             TurnOffScreen(screenManager);
