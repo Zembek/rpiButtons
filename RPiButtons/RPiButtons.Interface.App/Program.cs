@@ -4,6 +4,8 @@ using RPiButtons.SSD1306;
 using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
+using System.Diagnostics;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,12 +89,21 @@ namespace RPiButtons.Interface.App
             Console.WriteLine("END DeInitialize piouts");
         }
 
-        private static void ApplicationLoop(SSD1306Manager manager, GpioController controller, ButtonsManager buttonsManager, Dictionary<int, bool> enabledRelays)
+        private static async Task ApplicationLoop(SSD1306Manager manager, GpioController controller, ButtonsManager buttonsManager, Dictionary<int, bool> enabledRelays, string marcoPoloAPI)
         {
+            HttpClient client = new HttpClient();
+            Stopwatch watch = new Stopwatch();
+
             Console.WriteLine("Start application loop");
-            SetRelayStatus(manager, enabledRelays);
+            SetRelayStatus(manager, enabledRelays, string.Empty, "0");
             while (true)
             {
+                watch.Restart();
+                var response = await client.GetStringAsync(marcoPoloAPI);
+                watch.Stop();
+                string elapsedMS = watch.ElapsedMilliseconds.ToString();
+                SetRelayStatus(manager, enabledRelays, response, elapsedMS);
+
                 List<MatrixButton> pressedButtons = buttonsManager.ArePressed();
                 foreach (var button in pressedButtons)
                 {
@@ -115,7 +126,7 @@ namespace RPiButtons.Interface.App
 
                 if (pressedButtons.Count > 0)
                 {
-                    SetRelayStatus(manager, enabledRelays);
+                    SetRelayStatus(manager, enabledRelays, response, elapsedMS);
                 }
 
                 Thread.Sleep(500);
@@ -154,13 +165,15 @@ namespace RPiButtons.Interface.App
             Console.WriteLine("END Initialize Screen");
         }
 
-        private static void SetRelayStatus(SSD1306Manager manager, Dictionary<int, bool> enabledRelays)
+        private static void SetRelayStatus(SSD1306Manager manager, Dictionary<int, bool> enabledRelays, string apiResponse, string responseTime)
         {
             manager.Clear();
             manager.WriteMessage(0, 0, $"R1: {(enabledRelays[_pinouts[0]] ? "ON" : "OFF")}");
             manager.WriteMessage(0, 80, $"R2: {(enabledRelays[_pinouts[1]] ? "ON" : "OFF")}");
-            manager.WriteMessage(2, 0, $"R3: {(enabledRelays[_pinouts[2]] ? "ON" : "OFF")}");
-            manager.WriteMessage(2, 80, $"R4: {(enabledRelays[_pinouts[3]] ? "ON" : "OFF")}");
+            manager.WriteMessage(1, 0, $"Message: Marco");
+            manager.WriteMessage(2, 0, $"[{responseTime}ms] Respons: {apiResponse}");
+            manager.WriteMessage(3, 0, $"R3: {(enabledRelays[_pinouts[2]] ? "ON" : "OFF")}");
+            manager.WriteMessage(3, 80, $"R4: {(enabledRelays[_pinouts[3]] ? "ON" : "OFF")}");
             manager.Update();
         }
     }
