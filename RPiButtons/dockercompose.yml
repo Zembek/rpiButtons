@@ -4,16 +4,16 @@ services:
   application-api:
     image: rpi/rpibuttons-api
     ports:
-      - "5100:8080"
+      - "8080:8080"
     expose:
-      - "5100"
+      - "8080"
 
   application-app:
     image: rpi/rpibuttons-app
     environment:
       - API_HOST=application-api
       - API_PROTOCOL=http
-      - API_PORT=5100
+      - API_PORT=8080
     devices:
       - /dev/gpiomem:/dev/gpiomem
       - /dev/i2c-1:/dev/i2c-1

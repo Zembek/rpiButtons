@@ -31,6 +31,7 @@ namespace RPiButtons.Interface.App
             string apiUrl = $"{apiProtocol}://{apiHost}:{apiPort}/MarcoPolo";
 
             Console.WriteLine("App is up");
+            Console.WriteLine($"API URL: {apiUrl}");
 #if DEBUG
             Console.WriteLine("Waiting for debugger. Press any key to continue");
             Console.ReadKey();
