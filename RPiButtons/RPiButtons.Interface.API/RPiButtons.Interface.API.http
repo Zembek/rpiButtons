@@ -1,6 +1,6 @@
-@RPiButtons.Interface.API_HostAddress = http://localhost:5011
+@RPiButtons.Interface.API_HostAddress = http://localhost:5098
 
-GET {{RPiButtons.Interface.API_HostAddress}}/MarcoPolo/
+GET {{RPiButtons.Interface.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

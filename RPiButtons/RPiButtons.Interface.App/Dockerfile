@@ -13,6 +13,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /App
 COPY --from=build-env /App/out .
 
-EXPOSE 8080
-
-ENTRYPOINT ["dotnet", "RPiButtons.Interface.API.dll"]
+ENTRYPOINT ["dotnet", "RPiButtons.Interface.App.dll"]

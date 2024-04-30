@@ -6,10 +6,10 @@ namespace RPiButtons.Interface.API.Controllers
     [Route("[controller]")]
     public class MarcoPoloController : Controller
     {
-        [HttpGet(Name = "Marco")]
+        [HttpGet]
         public JsonResult Marco()
         {
-            return Json("Polo");
+            return new JsonResult("Polo");
         }
     }
 }

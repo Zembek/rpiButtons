@@ -22,6 +22,12 @@ namespace RPiButtons.Interface.App
 
         static void Main(string[] args)
         {
+            string apiHost = Environment.GetEnvironmentVariable("API_HOST");
+            string apiProtocol = Environment.GetEnvironmentVariable("API_PROTOCOL");
+            string apiPort = Environment.GetEnvironmentVariable("API_PORT");
+
+            string apiUrl = $"{apiProtocol}://{apiHost}:{apiPort}/MarcoPolo";
+
             Console.WriteLine("App is up");
 #if DEBUG
             Console.WriteLine("Waiting for debugger. Press any key to continue");
