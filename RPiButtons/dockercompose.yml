@@ -3,8 +3,8 @@ version: '3.4'
 services:
   application-api:
     image: rpi/rpibuttons-api
-    ports:
-      - "8080:8080"
+    # ports:
+    #   - "8080:8080"
     expose:
       - "8080"
 
