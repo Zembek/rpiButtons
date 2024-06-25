@@ -13,7 +13,10 @@ namespace RPiButtons.Interface.App
 {
     class Program
     {
-        private static List<int> _pinouts = new List<int> { 14, 15, 18, 23/*, 24, 25, 8, 7 */};
+        //private static List<int> _pinouts = new List<int> { 14, 15, 18, 23/*, 24, 25, 8, 7 */};
+
+        private static List<int> _pinouts = new List<int> { 14, 15, 18, 23, 24, 25, 8, 7, 12, 16, 20, 21, 26 };
+
         private static List<MatrixButton> _matrixButtons = new List<MatrixButton>
         {
             new MatrixButton("One", 21, 16),
@@ -37,30 +40,30 @@ namespace RPiButtons.Interface.App
             Console.ReadKey();
 #endif
 
-            SSD1306Manager screenManager = new SSD1306Manager();
+            //SSD1306Manager screenManager = new SSD1306Manager();
             GpioController gpioController = new GpioController();
-            ButtonsManager buttonsManager = new ButtonsManager();
+            //ButtonsManager buttonsManager = new ButtonsManager();
 
-            InitializeScreen(screenManager);
+            //InitializeScreen(screenManager);
             Dictionary<int, bool> enabledRelays = InitializeRelays(gpioController);
 
-            screenManager.DrawPikachu(0, 0);
+            //screenManager.DrawPikachu(0, 0);
             Thread.Sleep(2000);
 
 
-            //foreach (int pin in _pinouts)
-            //{
-            //    gpioController.Write(pin, PinValue.Low);
-            //    Thread.Sleep(500);
-            //    gpioController.Write(pin, PinValue.High);
-            //    Thread.Sleep(500);
-            //}
+            foreach (int pin in _pinouts)
+            {
+                gpioController.Write(pin, PinValue.Low);
+                Thread.Sleep(500);
+                gpioController.Write(pin, PinValue.High);
+                Thread.Sleep(500);
+            }
 
-            InitializeMatrixButtons(gpioController, buttonsManager);
-            await ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays, apiUrl);
+            //InitializeMatrixButtons(gpioController, buttonsManager);
+            //await ApplicationLoop(screenManager, gpioController, buttonsManager, enabledRelays, apiUrl);
             DeinitializeRelays(gpioController);
-            DeinitializeMatrixButtons(buttonsManager);
-            TurnOffScreen(screenManager);
+            //DeinitializeMatrixButtons(buttonsManager);
+            //TurnOffScreen(screenManager);
 
             Console.WriteLine("App is down");
         }
